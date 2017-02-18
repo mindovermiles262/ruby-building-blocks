@@ -2,13 +2,11 @@ def bubble_sort(arr)
     index = 0
     while (index < (arr.length - 1)) do
         rep = 0
-        (arr.length - 1).times do
-            if (arr[rep] > arr[rep + 1])
-                arr[rep], arr[rep + 1] = arr[rep + 1], arr[rep]
-            end
-            rep += 1
-        end
-    index += 1
+        (arr.length - 1).times {
+            arr[rep] > arr[rep + 1] ? \
+            (arr[rep], arr[rep + 1] = arr[rep + 1], arr[rep]; rep += 1) \
+            : (rep += 1) }
+        index += 1
     end
     return arr
 end
@@ -21,13 +19,9 @@ def bubble_sort_by(arr)
     index = 0
     while (index < (arr.length - 1)) do
         rep = 0
-        (arr.length - 1).times do
-            if yield(arr[rep], arr[rep + 1]) > 0
-                arr[rep], arr[rep + 1] = arr[rep + 1], arr[rep]
-            end
-            rep += 1
-        end
-    index += 1
+        (arr.length - 1).times { yield(arr[rep], arr[rep + 1]) > 0 ? \
+                (arr[rep], arr[rep + 1] = arr[rep + 1], arr[rep]; index += 1) \
+                : (index += 1) }
     end
     return arr
 end
