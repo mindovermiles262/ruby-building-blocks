@@ -13,6 +13,7 @@ module Enumerable
     
     def my_select
         arr = []
+        #add iteration if true
         for i in self
             arr << i if (yield(i) == true)
         end
@@ -20,6 +21,7 @@ module Enumerable
     end
     
     def my_all?
+        #check all iterations are true
         for i in self
             (yield(i) == true) ? (next) : (return false)
         end
@@ -27,6 +29,7 @@ module Enumerable
     end
     
     def my_any?
+        #check if any iterations are true
         for i in self
             (yield(i) == true) ? (return true) : (next)
         end
@@ -34,6 +37,7 @@ module Enumerable
     end
     
     def my_none?
+        #check all iterations are false
         for i in self
             (yield(i) == true) ? (return false) : (next)
         end
@@ -59,13 +63,15 @@ module Enumerable
         count #Return count
     end
     
-    def my_map        
+    def my_map(proc = nil)
         arr = []
         for i in self
-            if block_given?
+            if proc && block_given?
+                arr << proc.call(yield(i))
+            elsif block_given?
                 arr << yield(i)
             else
-                arr << self
+                arr << proc.call(i)
             end
         end
         arr
@@ -76,11 +82,10 @@ module Enumerable
         self.my_each { |i| memo = yield(memo, i) }
         memo
     end
-    
-    #`multiply_els([2,4,5]) #=> 40`
-    def multiply_els(arr)
-        self.my_inject{ |memo, i| memo * i }
-    end  
 end
 
-multiply_els([2,4,5])
+# check my_inject
+def multiply_els(arr)
+    arr.my_inject(1) { |memo, i| memo * i }
+end
+#multiply_els([2,4,5]) #=> 40`
