@@ -37,7 +37,6 @@ class CaesarCipher
             end
         end
         # Return encrypted string
-        puts encrypted.join("")
         return encrypted.join("")
     end
 end
