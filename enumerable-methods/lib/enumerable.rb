@@ -6,13 +6,17 @@ module Enumerable
     end
 
     def my_each_with_index
-        for i in self
-            yield(self[i-1], i-1)
+        i = 0
+        while i < self.length
+            yield(self[i],i)
+            i += 1
         end
+        self
     end
     
     def my_select
         arr = []
+        i = 0
         #add iteration if true
         for i in self
             arr << i if (yield(i) == true)
